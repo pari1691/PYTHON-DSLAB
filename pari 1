@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyMC7rpzpxtb76sCc6iEY71X",
+      "authorship_tag": "ABX9TyPSAtr2k54yhER/r7OZx6ib",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,13 +28,13 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 15,
+      "execution_count": 17,
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
         "id": "pE2Sd5v6WUBG",
-        "outputId": "8bd03b7f-0a49-48c1-e3dc-19a847397363"
+        "outputId": "b2e7c1e3-3539-4262-e8d6-55b3d07fd125"
       },
       "outputs": [
         {
@@ -61,13 +61,13 @@
         "    def __init__(self):\n",
         "        self.head = None\n",
         "\n",
-        "    # Insert at beginning\n",
+        "\n",
         "    def push(self, new_data):\n",
         "        new_node = Node(new_data)\n",
         "        new_node.next = self.head\n",
         "        self.head = new_node\n",
         "\n",
-        "    # Insert after a given node\n",
+        "\n",
         "    def insertAfter(self, prev_node, new_data):\n",
         "        if prev_node is None:\n",
         "            print(\"The given previous node must be in LinkedList.\")\n",
@@ -77,7 +77,7 @@
         "        new_node.next = prev_node.next\n",
         "        prev_node.next = new_node\n",
         "\n",
-        "    # Insert at end\n",
+        "\n",
         "    def append(self, new_data):\n",
         "        new_node = Node(new_data)\n",
         "\n",
@@ -90,9 +90,9 @@
         "        while last.next:\n",
         "            last = last.next\n",
         "\n",
-        "        last.next = new_node\n",
+        "        last.next =new_node\n",
         "\n",
-        "    # Display linked list\n",
+        "\n",
         "    def printList(self):\n",
         "        temp = self.head\n",
         "\n",
@@ -101,7 +101,7 @@
         "            temp = temp.next\n",
         "\n",
         "\n",
-        "# Main program\n",
+        "\n",
         "if __name__ == '__main__':\n",
         "    llist = LinkedList()\n",
         "\n",
