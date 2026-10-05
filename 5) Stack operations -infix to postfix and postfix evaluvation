@@ -1,0 +1,155 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNXO6KIWJ3pWs+1O6MKZ3K9",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/pari1691/PYTHON-DSLAB/blob/main/5)%20Stack%20operations%20-infix%20to%20postfix%20and%20postfix%20evaluvation\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "egpDJaseOPVs",
+        "outputId": "72284587-074b-4be7-fda9-b8d4385130c6"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Postfix expression: abcd^e-fgh*+^*+i-\n"
+          ]
+        }
+      ],
+      "source": [
+        "class Conversion:\n",
+        "    def __init__(self, capacity):\n",
+        "        self.top = -1\n",
+        "        self.capacity = capacity\n",
+        "        self.array = []\n",
+        "        self.output = []\n",
+        "        self.precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}\n",
+        "    def isEmpty(self):\n",
+        "        return True if self.top == -1 else False\n",
+        "    def peek(self):\n",
+        "        return self.array[-1]\n",
+        "    def pop(self):\n",
+        "        if not self.isEmpty():\n",
+        "            self.top -= 1\n",
+        "            return self.array.pop()\n",
+        "        else:\n",
+        "            return \"$\"\n",
+        "    def push(self, op):\n",
+        "        self.top += 1\n",
+        "        self.array.append(op)\n",
+        "    def isOperand(self, ch):\n",
+        "        return ch.isalnum()\n",
+        "    def notGreater(self, i):\n",
+        "        try:\n",
+        "            a = self.precedence[i]\n",
+        "            b = self.precedence[self.peek()]\n",
+        "            return True if a <= b else False\n",
+        "        except KeyError:\n",
+        "            return False\n",
+        "    def infixToPostfix(self, exp):\n",
+        "        for i in exp:\n",
+        "            if self.isOperand(i):\n",
+        "                self.output.append(i)\n",
+        "            elif i == '(':\n",
+        "                self.push(i)\n",
+        "            elif i == ')':\n",
+        "                while (not self.isEmpty()) and self.peek() != '(':\n",
+        "                    self.output.append(self.pop())\n",
+        "                if not self.isEmpty() and self.peek() != '(':\n",
+        "                    return -1\n",
+        "                else:\n",
+        "                    self.pop()\n",
+        "            else:\n",
+        "                while (not self.isEmpty()) and self.notGreater(i):\n",
+        "                    self.output.append(self.pop())\n",
+        "                self.push(i)\n",
+        "        while not self.isEmpty():\n",
+        "            self.output.append(self.pop())\n",
+        "        print(\"Postfix expression:\", \"\".join(self.output))\n",
+        "exp = \"a+b*(c^d-e)^(f+g*h)-i\"\n",
+        "obj = Conversion(len(exp))\n",
+        "obj.infixToPostfix(exp)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class PostfixEvaluation:\n",
+        "    def __init__(self):\n",
+        "        self.stack = []\n",
+        "    def push(self, value):\n",
+        "        self.stack.append(value)\n",
+        "    def pop(self):\n",
+        "        return self.stack.pop()\n",
+        "    def evaluate(self, exp):\n",
+        "        for ch in exp:\n",
+        "            if ch.isdigit():\n",
+        "                self.push(int(ch))\n",
+        "            else:\n",
+        "                val2 = self.pop()\n",
+        "                val1 = self.pop()\n",
+        "                if ch == '+':\n",
+        "                    self.push(val1 + val2)\n",
+        "                elif ch == '-':\n",
+        "                    self.push(val1 - val2)\n",
+        "                elif ch == '*':\n",
+        "                    self.push(val1 * val2)\n",
+        "                elif ch == '/':\n",
+        "                    self.push(val1 / val2)\n",
+        "                elif ch == '^':\n",
+        "                    self.push(val1 ** val2)\n",
+        "        return self.pop()\n",
+        "exp = \"231*+9-\"\n",
+        "obj = PostfixEvaluation()\n",
+        "result = obj.evaluate(exp)\n",
+        "print(\"Result:\", result)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RyxogS1LQgoi",
+        "outputId": "ef6a9df0-b768-4ff3-b10e-02cb20c03456"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Result: -4\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
